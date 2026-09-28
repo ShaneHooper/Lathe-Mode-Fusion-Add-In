@@ -46,11 +46,23 @@ Fusion 360.
 The mode never appears in the Manufacture workspace, and sketches you mark
 keep working if you later upgrade to the full G-SEND.IO.
 
+## The monthly reminder
+
+Once a month, about twenty seconds after Fusion starts, the add-in asks
+whether you want to see what the full G-SEND.IO adds. Yes opens
+[g-send.io](https://g-send.io); No closes it and nothing asks again for
+another 30 days. A fresh install is not asked until it has been in use
+for a month.
+
+The date of the last prompt lives in one small file,
+`%APPDATA%\G-SEND.IO\lathe_mode_reminder.json`. Delete it to start the
+clock over.
+
 ## Uninstall
 
 Close Fusion 360 and delete
 `%APPDATA%\Autodesk\Autodesk Fusion 360\API\AddIns\GSendLatheMode`.
-The add-in keeps nothing anywhere else.
+The only other thing the add-in writes is the reminder file above.
 
 ## Layout
 
@@ -60,7 +72,9 @@ GSendLatheMode/
   GSendLatheMode.py            entry point: run() / stop()
   fusion/lathe_sketch_mode.py  the Lathe Mode commands and sketch handling
   fusion/upgrade.py            the Upgrade to G-SEND.IO button and menu row
+  fusion/reminder.py           the once-a-month upgrade prompt
   lib/lathe_sketch.py          pure geometry helpers (no Fusion imports)
+  lib/upgrade_reminder.py      when the monthly prompt is due (no Fusion imports)
   resources/gsendio/           the G-SEND icon at 16, 32 and 64 px
   README.txt                   the install notes shipped inside the folder
 ```
@@ -78,6 +92,14 @@ speeds and feeds, simulators, and machine send/receive over RS-232.
 
 **[g-send.io](https://g-send.io)**, or click **Upgrade to G-SEND.IO** right
 inside the add-in.
+
+## Tests
+
+The Fusion-free parts have plain unittest coverage:
+
+```
+python -m unittest discover tests
+```
 
 ## License
 
