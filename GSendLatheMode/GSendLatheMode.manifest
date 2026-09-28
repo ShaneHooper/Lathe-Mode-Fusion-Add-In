@@ -1,0 +1,13 @@
+{
+    "autodeskProduct": "Fusion",
+    "type": "addin",
+    "id": "78a2c6bc-bb56-4621-a071-ba85bdac17f4",
+    "author": "G-SEND.IO",
+    "description": {
+        "": "G-SEND Lathe Mode (free): right-click a sketch centerline and dimensions to it become diameters, the way a lathe print reads. Part of G-SEND.IO."
+    },
+    "version": "0.1.0",
+    "runOnStartup": true,
+    "supportedOS": "windows",
+    "editEnabled": true
+}
