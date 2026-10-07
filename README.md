@@ -2,7 +2,7 @@
 
 **Draw lathe parts in diameters, the way the print reads.**
 
-A free Fusion 360 add-in from [G-SEND.IO](https://g-send.io). Right-click a
+A free Fusion 360 add-in from [G-SEND.IO](https://3ddistributed.com/g-send-io/). Right-click a
 sketch line in the Design workspace and choose **G-SEND.IO: Lathe Mode**.
 That line becomes your spindle centerline, and from then on dimensions to it
 are real diameter dimensions: type the print's number, the geometry lands at
@@ -46,15 +46,16 @@ Fusion 360.
 The mode never appears in the Manufacture workspace, and sketches you mark
 keep working if you later upgrade to the full G-SEND.IO.
 
-## The monthly reminder
+## The monthly visit
 
-Once a month, about twenty seconds after Fusion starts, the add-in asks
-whether you want to see what the full G-SEND.IO adds. Yes opens
-[g-send.io](https://g-send.io); No closes it and nothing asks again for
-another 30 days. A fresh install is not asked until it has been in use
-for a month.
+Once every 30 days, about twenty seconds after Fusion starts, the add-in
+opens your default web browser on the
+[G-SEND.IO page](https://3ddistributed.com/g-send-io/) so you can see what
+the full G-SEND.IO adds. That is all it does: it sends nothing about you
+or your designs anywhere, and a fresh install waits a full 30 days before
+the first visit.
 
-The date of the last prompt lives in one small file,
+The date of the last visit lives in one small file,
 `%APPDATA%\G-SEND.IO\lathe_mode_reminder.json`. Delete it to start the
 clock over.
 
@@ -62,7 +63,7 @@ clock over.
 
 Close Fusion 360 and delete
 `%APPDATA%\Autodesk\Autodesk Fusion 360\API\AddIns\GSendLatheMode`.
-The only other thing the add-in writes is the reminder file above.
+The only other thing the add-in writes is the monthly-visit file above.
 
 ## Layout
 
@@ -72,9 +73,9 @@ GSendLatheMode/
   GSendLatheMode.py            entry point: run() / stop()
   fusion/lathe_sketch_mode.py  the Lathe Mode commands and sketch handling
   fusion/upgrade.py            the Upgrade to G-SEND.IO button and menu row
-  fusion/reminder.py           the once-a-month upgrade prompt
+  fusion/reminder.py           the once-a-month browser visit
   lib/lathe_sketch.py          pure geometry helpers (no Fusion imports)
-  lib/upgrade_reminder.py      when the monthly prompt is due (no Fusion imports)
+  lib/upgrade_reminder.py      when the monthly visit is due (no Fusion imports)
   resources/gsendio/           the G-SEND icon at 16, 32 and 64 px
   README.txt                   the install notes shipped inside the folder
 ```
@@ -90,7 +91,7 @@ Lathe Mode is the free taste. The full **G-SEND.IO** adds the G-code editor
 and IDE, one-button lathe setup creation from your model, CAM templates,
 speeds and feeds, simulators, and machine send/receive over RS-232.
 
-**[g-send.io](https://g-send.io)**, or click **Upgrade to G-SEND.IO** right
+**[3ddistributed.com/g-send-io](https://3ddistributed.com/g-send-io/)**, or click **Upgrade to G-SEND.IO** right
 inside the add-in.
 
 ## Tests

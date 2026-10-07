@@ -1,18 +1,19 @@
-"""The once-a-month "upgrade to G-SEND.IO" prompt.
+"""The once-a-month "see the full G-SEND.IO" page.
 
 Lite-only module, like upgrade.py: nothing here exists in the full add-in.
 
-On add-in start, lib/upgrade_reminder.py decides whether a prompt is due
-(first run records the install date and shows nothing; then at most once
-every 30 days). When it is, the dialog opens a few seconds AFTER startup
-rather than during it: Fusion is still building its own UI while
-run-on-startup add-ins load, and a modal thrown into that is the kind of
-thing that gets an add-in disabled. The delay is a background timer that
-fires a Fusion custom event, and the custom event's handler runs on
-Fusion's main thread, which is the only thread the API may be called from.
+On add-in start, lib/upgrade_reminder.py decides whether a visit is due
+(first run records the install date and opens nothing; then at most once
+every 30 days). When it is, the user's default browser opens on
+UPGRADE_URL - no dialog first (Shane, 10/6/26: "every 30 days it opens
+up their default internet browser and sends them to the website").
 
-The dialog is a plain Yes/No message box. Yes opens the same page the
-Upgrade button opens; No closes it, and nothing asks again for a month.
+The page opens a few seconds AFTER startup rather than during it: Fusion
+is still building its own UI while run-on-startup add-ins load, and the
+browser stealing focus from a half-drawn Fusion is the worst moment to do
+it. The delay is a background timer that fires a Fusion custom event, and
+the custom event's handler runs on Fusion's main thread, which is the
+only thread the API may be called from.
 """
 
 import threading
@@ -26,16 +27,8 @@ from .upgrade import UPGRADE_URL
 
 CUSTOM_EVENT_ID = "gsendlite_upgrade_reminder"
 
-#: Seconds after the add-in starts before the prompt opens.
+#: Seconds after the add-in starts before the page opens.
 DELAY_SECONDS = 20
-
-TITLE = "G-SEND Lathe Mode"
-MESSAGE = (
-    "Thanks for using G-SEND Lathe Mode.\n\n"
-    "The full G-SEND.IO adds the G-code editor, one-button lathe setup "
-    "creation from your model, CAM templates, speeds and feeds, lathe and "
-    "mill simulators, and machine send/receive.\n\n"
-    "Open g-send.io to see what it does?")
 
 _custom_event = None
 _event_handler = None
@@ -50,28 +43,25 @@ def _log(message):
         pass
 
 
-def _show(ui):
-    """The dialog itself. The state was recorded before the timer was
-    armed, so whatever happens here cannot re-arm it for tomorrow."""
-    result = ui.messageBox(
-        MESSAGE, TITLE,
-        adsk.core.MessageBoxButtonTypes.YesNoButtonType,
-        adsk.core.MessageBoxIconTypes.QuestionIconType)
-    if result == adsk.core.DialogResults.DialogYes:
-        webbrowser.open(UPGRADE_URL)
+def _open_page():
+    """Open the page in the default browser. The state was recorded before
+    the timer was armed, so whatever happens here cannot re-arm it for
+    tomorrow."""
+    if not webbrowser.open(UPGRADE_URL):
+        _log("the browser did not open %s" % UPGRADE_URL)
 
 
 class _ReminderHandler(adsk.core.CustomEventHandler):
     def notify(self, args):
         try:
-            _show(adsk.core.Application.get().userInterface)
+            _open_page()
         except Exception:
-            _log("prompt failed\n" + traceback.format_exc())
+            _log("opening the page failed\n" + traceback.format_exc())
 
 
 def start(app, ui):
-    """Decide, and if a prompt is due, arm the delayed dialog. Called from
-    the entry, guarded there."""
+    """Decide, and if a visit is due, arm the delayed browser open. Called
+    from the entry, guarded there."""
     global _custom_event, _event_handler, _timer
     action = upgrade_reminder.decide_and_record(upgrade_reminder.state_path())
     _log("reminder check: %s" % action)

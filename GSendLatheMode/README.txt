@@ -42,7 +42,7 @@ HOW TO UNINSTALL
   1. Close Fusion 360.
   2. Delete this folder:
        %APPDATA%\Autodesk\Autodesk Fusion 360\API\AddIns\GSendLatheMode
-  3. The only other thing it writes is the once-a-month reminder's
+  3. The only other thing it writes is the once-a-month page visit's
      date, in %APPDATA%\G-SEND.IO\lathe_mode_reminder.json. Delete
      that too if you like.
 

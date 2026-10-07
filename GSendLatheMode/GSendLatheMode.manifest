@@ -6,7 +6,7 @@
     "description": {
         "": "G-SEND Lathe Mode (free): right-click a sketch centerline and dimensions to it become diameters, the way a lathe print reads. Part of G-SEND.IO."
     },
-    "version": "0.1.0",
+    "version": "0.2.0",
     "runOnStartup": true,
     "supportedOS": "windows",
     "editEnabled": true

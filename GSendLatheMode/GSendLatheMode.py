@@ -3,8 +3,8 @@
 Just the Lathe Mode sketch tool from the full add-in (right-click a
 sketch centerline in Design and dimensions to it become diameters, the
 way a lathe print reads), plus an Upgrade button that opens the page to
-buy the full G-SEND.IO and a once-a-month prompt pointing at the same
-page (fusion/reminder.py).
+buy the full G-SEND.IO, and a once-a-month visit to the same page in
+the default browser (fusion/reminder.py).
 
 The Lathe Mode code is vendored BYTE-FOR-BYTE from the full add-in
 (lib/lathe_sketch.py and fusion/lathe_sketch_mode.py); a repo test pins
@@ -59,7 +59,7 @@ def run(_context):
         from .fusion import upgrade
         upgrade.start(app, _ui)
 
-        # The once-a-month upgrade prompt. Its own try: a reminder that
+        # The once-a-month browser visit. Its own try: a reminder that
         # cannot arm must never take Lathe Mode down with it.
         try:
             from .fusion import reminder
