@@ -17,7 +17,7 @@ import adsk.core
 
 #: Where the Upgrade button sends people. One place to change when the
 #: store page moves.
-UPGRADE_URL = "https://g-send.io"
+UPGRADE_URL = "https://3ddistributed.com/g-send-io/"
 
 CMD_ID = "gsendlite_upgrade"
 BUTTON_NAME = "Upgrade to G-SEND.IO"
